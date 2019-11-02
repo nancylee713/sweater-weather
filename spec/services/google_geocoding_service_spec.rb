@@ -1,18 +1,20 @@
 require 'rails_helper'
 
 RSpec.describe GoogleGeocodingService do
+  before(:each) do
+    VCR.turn_off!
+    WebMock.allow_net_connect!
+  end
+
   it "can get latitude and longitude of a given city" do
-    json_data = GoogleGeocodingService.get_location(
-      city: "Denver",
-      state: "CO"
-    )
+    json_data = GoogleGeocodingService.get_location(city: "Denver", state: "CO")
+
     expect(json_data).to be_a(Hash)
     expect(json_data).to have_key(:results)
-    latitude = json_data[:results].first[:geometry][:location][:lat]
-    expect(latitude).to have_key(:location)
-    expect(latitude).to have_key(:lat)
-    longitude = json_data[:results].first[:geometry][:location][:lng]
-    expect(longitude).to have_key(:location)
-    expect(longitude).to have_key(:lng)
+    geometry = json_data[:results].first[:geometry]
+    expect(geometry).to have_key(:location)
+    location = geometry[:location]
+    expect(location).to have_key(:lat)
+    expect(location).to have_key(:lng)
   end
 end
