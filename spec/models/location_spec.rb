@@ -4,6 +4,12 @@ RSpec.describe Location do
   before(:each) do
     json_data = {
       "results": [
+        "address_components": [
+          { "long_name": "Denver" },
+          { "long_name": "Denver County" },
+          { "short_name": "CO" },
+          { "long_name": "United States" }
+        ],
         "geometry": {
           "location": {
              "lat": 39.7392358,
@@ -28,5 +34,21 @@ RSpec.describe Location do
   it "can return longitude" do
     expected = -104.990251
     expect(@location.longitude).to eq(expected)
+  end
+
+  it "can return address" do
+    expected = {
+      city: 'Denver',
+      state: 'CO',
+      country: 'United States'
+    }
+
+    expect(@location.address).to eq(expected)
+  end
+
+  it "can return formatted address" do
+    expected = "Denver, CO, United States"
+
+    expect(@location.formatted_address).to eq(expected)
   end
 end
