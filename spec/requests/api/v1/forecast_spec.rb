@@ -20,5 +20,8 @@ describe 'Forecast API' do
     expect(response).to be_successful
 
     parsed = JSON.parse(response.body, symbolize_names: true)
+
+    expect(parsed[:data][:attributes][:location]).to eq("Denver, CO, United States")
+    expect(parsed[:data][:attributes].count).to eq(13)
   end
 end
