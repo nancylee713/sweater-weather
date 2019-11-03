@@ -47,8 +47,6 @@ RSpec.describe DarkSkyService do
     expect(hourly[:data].first).to have_key(:humidity)
     expect(hourly[:data].first).to have_key(:visibility)
     expect(hourly[:data].first).to have_key(:uvIndex)
-
-    # Today summary
-    # Tonight summary
+    expect(hourly[:data].first).to have_key(:summary)
   end
 end
