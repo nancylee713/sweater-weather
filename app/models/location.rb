@@ -8,7 +8,7 @@ class Location
   end
 
   def formatted_address
-    address.values.join(', ')
+    address.values.compact.join(', ')
   end
 
   private
@@ -17,7 +17,7 @@ class Location
     city = data[:results][0][:address_components][0][:long_name]
     state = data[:results][0][:address_components][2][:short_name] unless data[:results][0][:address_components][2].nil?
     country = data[:results][0][:address_components][3][:long_name] unless data[:results][0][:address_components][3].nil?
-    
+
     {
       city: city,
       state: state,
