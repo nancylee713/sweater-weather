@@ -3,7 +3,8 @@ require 'rails_helper'
 describe 'Antipode API' do
   before(:each) do
     VCR.turn_off!
-    WebMock.allow_net_connect!
+    # WebMock.allow_net_connect!
+    stub_weather_info
   end
 
   it 'sends forecast data' do

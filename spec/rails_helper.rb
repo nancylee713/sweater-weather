@@ -22,7 +22,24 @@ VCR.configure do |config|
   config.cassette_library_dir = 'spec/cassettes'
   config.hook_into :webmock
   config.configure_rspec_metadata!
-  config.filter_sensitive_data('<YOUTUBE_API_KEY>') { ENV['YOUTUBE_API_KEY'] }
+end
+
+def stub_weather_info
+  start_city_data = File.open('./spec/fixtures/google_geocoding_data.json')
+  stub_request(:get, "https://maps.googleapis.com/maps/api/geocode/json?address=hongkong, &key=#{ENV['google_geocoding_api']}")
+    .to_return(status: 200, body: start_city_data)
+
+  antipode_data = File.open('./spec/fixtures/antipode_data.json')
+  stub_request(:get, 'http://amypode.herokuapp.com/api/v1/antipodes?lat=22.3193039&long=114.1693611')
+    .to_return(status: 200, body: antipode_data)
+
+  antipode_city_data = File.open('./spec/fixtures/reverse_geocoding_data.json')
+  stub_request(:get, "https://maps.googleapis.com/maps/api/geocode/json?latlng=-22.3193039,-65.8306389&key=#{ENV['google_geocoding_api']}")
+    .to_return(status: 200, body: antipode_city_data)
+
+  weather_data = File.open('./spec/fixtures/weather_data.json')
+  stub_request(:get, "https://api.darksky.net/forecast/#{ENV['dark_sky_api']}/-22.3193039,-65.8306389")
+    .to_return(status: 200, body: weather_data)
 end
 
 # Prevent database truncation if the environment is production
