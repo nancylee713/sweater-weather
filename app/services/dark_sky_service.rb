@@ -7,9 +7,7 @@ class DarkSkyService
     lat = location.latitude
     lng = location.longitude
 
-    response = conn.get "#{lat},#{lng}", {
-      exclude: 'flags'
-    }
+    response = conn.get "#{lat},#{lng}"
 
     json = JSON.parse(response.body, symbolize_names: true)
   end
