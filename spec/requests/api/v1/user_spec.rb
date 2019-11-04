@@ -24,4 +24,17 @@ describe 'Account Creation' do
     expect(parsed).to have_key(:error)
     expect(parsed[:error]).to eq('Invalid request. Please try again.')
   end
+
+  it 'returns 400 status code when email has already been taken' do
+    user = User.create(user_attributes)
+
+    post '/api/v1/users', params: { email: 'whatever@example.com', password: 'test', password_confirmation: 'test'}
+
+    expect(response.status).to eq(400)
+
+    parsed = JSON.parse(response.body, symbolize_names: true)
+
+    expect(parsed).to have_key(:error)
+    expect(parsed[:error]).to eq('Sorry, this email has already been taken. Please log in or register with a different email address.')
+  end
 end
