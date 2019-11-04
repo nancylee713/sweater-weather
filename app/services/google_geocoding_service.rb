@@ -1,5 +1,5 @@
 class GoogleGeocodingService
-  def self.get_location(city:, state:)
+  def self.get_location(city:, state: "")
     new.get_location(city, state)
   end
 
