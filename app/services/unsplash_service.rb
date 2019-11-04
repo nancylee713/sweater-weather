@@ -4,7 +4,7 @@ class UnsplashService
   end
 
   def get_data(location)
-    response = Faraday.get "https://api.unsplash.com/search/photos/" do |req|
+    response = Faraday.get "https://api.unsplash.com/search/photos" do |req|
       req.headers['Accept-Version'] = 'v1'
       req.headers['Authorization'] = "Client-ID #{ENV['unsplash_access_key']}"
       req.params[:query] = location

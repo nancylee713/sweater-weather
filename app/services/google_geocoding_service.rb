@@ -5,7 +5,7 @@ class GoogleGeocodingService
 
   def get_location(city, state)
     response = conn.get 'geocode/json', {
-      address: "#{city}, #{state}"
+      address: "#{city},#{state}"
     }
 
     json = JSON.parse(response.body, symbolize_names: true)

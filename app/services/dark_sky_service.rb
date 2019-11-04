@@ -4,21 +4,12 @@ class DarkSkyService
   end
 
   def get_data(location)
+    key = ENV['dark_sky_api']
     lat = location.latitude
     lng = location.longitude
 
-    response = conn.get "#{lat},#{lng}", {
-      exclude: 'flags'
-    }
+    response = Faraday.get "https://api.darksky.net/forecast/#{key}/#{lat},#{lng}" 
 
     json = JSON.parse(response.body, symbolize_names: true)
-  end
-
-  def conn
-    key = ENV['dark_sky_api']
-    Faraday.new(:url => "https://api.darksky.net/forecast/#{key}/") do |faraday|
-      faraday.request :url_encoded
-      faraday.adapter Faraday.default_adapter
-    end
   end
 end
