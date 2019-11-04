@@ -24,14 +24,25 @@ VCR.configure do |config|
   config.configure_rspec_metadata!
 end
 
-def stub_forecast_request
+def stub_geocoding_request
   location_data = File.open('./spec/fixtures/google_geocoding_data.json')
   stub_request(:get, "https://maps.googleapis.com/maps/api/geocode/json?address=denver,co&key=#{ENV['google_geocoding_api']}")
     .to_return(status: 200, body: location_data)
+end
+
+def stub_darksky_request
+  key = ENV['dark_sky_api']
+  lat = 39.7392358
+  lng = -104.990251
 
   weather_data = File.open('./spec/fixtures/weather_data.json')
-  stub_request(:get, "https://api.darksky.net/forecast/#{ENV['dark_sky_api']}/39.7392358,-104.990251")
+  stub_request(:get, "https://api.darksky.net/forecast/#{key}/#{lat},#{lng}")
     .to_return(status: 200, body: weather_data)
+end
+
+def stub_forecast_request
+  stub_geocoding_request
+  stub_darksky_request
 end
 
 def stub_unsplash_request

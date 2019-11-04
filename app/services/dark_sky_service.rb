@@ -8,7 +8,7 @@ class DarkSkyService
     lat = location.latitude
     lng = location.longitude
 
-    response = Faraday.get "https://api.darksky.net/forecast/#{key}/#{lat},#{lng}" 
+    response = Faraday.get "https://api.darksky.net/forecast/#{key}/#{lat},#{lng}"
 
     json = JSON.parse(response.body, symbolize_names: true)
   end
