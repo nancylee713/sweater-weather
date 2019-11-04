@@ -16,4 +16,14 @@ describe 'Account Creation' do
     expect(parsed[:data].first[:attributes]).to have_key(:password)
     expect(parsed[:data].first[:attributes]).to have_key(:password_confirmation)
   end
+
+  it 'returns 400 status code when given an invalid request' do
+    post '/api/v1/users', params: {}
+
+    expect(response.status).to eq(400)
+
+    parsed = JSON.parse(response.body, symbolize_names: true)
+    expect(parsed).to have_key(:error)
+    expect(parsed[:error]).to eq('Invalid request. Please try again.')
+  end
 end

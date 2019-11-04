@@ -4,9 +4,10 @@ class Api::V1::UsersController < ApplicationController
     if user.save
       render json: UserSerializer.new(User.all)
     else
-      rescue_from ActionController::ParameterMissing do
-        render :nothing => true, :status => :bad_request
-      end
+      render json: {
+        error: "Invalid request. Please try again.",
+        status: 400
+      }, status: 400
     end
   end
 
