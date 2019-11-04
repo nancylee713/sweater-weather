@@ -14,10 +14,14 @@ class Location
   private
 
   def parse_address(data)
+    city = data[:results][0][:address_components][0][:long_name]
+    state = data[:results][0][:address_components][2][:short_name] unless data[:results][0][:address_components][2].nil?
+    country = data[:results][0][:address_components][3][:long_name] unless data[:results][0][:address_components][3].nil?
+    
     {
-      city: data[:results][0][:address_components][0][:long_name],
-      state: data[:results][0][:address_components][2][:short_name],
-      country: data[:results][0][:address_components][3][:long_name]
+      city: city,
+      state: state,
+      country: country
     }
   end
 end
