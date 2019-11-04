@@ -11,10 +11,8 @@ describe 'Account Creation' do
 
     parsed = JSON.parse(response.body, symbolize_names: true)
 
-    expect(parsed[:data].first[:attributes].count).to eq(4)
-    expect(parsed[:data].first[:attributes]).to have_key(:email)
-    expect(parsed[:data].first[:attributes]).to have_key(:password)
-    expect(parsed[:data].first[:attributes]).to have_key(:password_confirmation)
+    expect(parsed).to have_key(:api_key)
+    expect(parsed[:api_key]).to eq('jgn983hy48thw9begh98h4539h4')
   end
 
   it 'returns 400 status code when given an invalid request' do
