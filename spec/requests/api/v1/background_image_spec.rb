@@ -3,17 +3,18 @@ require 'rails_helper'
 describe 'Forecast API' do
   before(:each) do
     VCR.turn_off!
-    stub_forecast_request
+    stub_unsplash_request
   end
 
   it 'sends forecast data' do
-    get '/api/v1/forecast?location=denver,co'
+    get '/api/v1/backgrounds?location=denver,co'
 
     expect(response).to be_successful
 
     parsed = JSON.parse(response.body, symbolize_names: true)
 
-    expect(parsed[:data][:attributes][:location]).to eq("Denver, CO, United States")
-    expect(parsed[:data][:attributes].count).to eq(13)
+    expect(parsed).to have_key(:data)
+    expect(parsed[:data][:type]).to eq('background_image')
+    expect(parsed[:data][:attributes]).to have_key(:url)
   end
 end

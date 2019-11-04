@@ -22,7 +22,39 @@ VCR.configure do |config|
   config.cassette_library_dir = 'spec/cassettes'
   config.hook_into :webmock
   config.configure_rspec_metadata!
-  config.filter_sensitive_data('<YOUTUBE_API_KEY>') { ENV['YOUTUBE_API_KEY'] }
+end
+
+def stub_geocoding_request
+  location_data = File.open('./spec/fixtures/google_geocoding_data.json')
+  stub_request(:get, "https://maps.googleapis.com/maps/api/geocode/json?address=denver,co&key=#{ENV['google_geocoding_api']}")
+    .to_return(status: 200, body: location_data)
+end
+
+def stub_darksky_request
+  key = ENV['dark_sky_api']
+  lat = 39.7392358
+  lng = -104.990251
+
+  weather_data = File.open('./spec/fixtures/weather_data.json')
+  stub_request(:get, "https://api.darksky.net/forecast/#{key}/#{lat},#{lng}")
+    .to_return(status: 200, body: weather_data)
+end
+
+def stub_forecast_request
+  stub_geocoding_request
+  stub_darksky_request
+end
+
+def stub_unsplash_request
+  img_data = File.open('./spec/fixtures/image_data.json')
+  stub_request(:get, "https://api.unsplash.com/search/photos?query=denver,co")
+    .with(
+      headers: {
+        'Accept-Version': 'v1',
+        'Authorization': "Client-ID #{ENV['unsplash_access_key']}"
+      }
+    )
+    .to_return(status: 200, body: img_data)
 end
 
 # Prevent database truncation if the environment is production
