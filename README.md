@@ -1,24 +1,27 @@
-# README
+# Sweater-Weather Project
+Sweater-Weather is a JSON API that exposes the following endpoints:
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+```
+GET /api/v1/forecast?location=denver,co
+GET /api/v1/backgrounds?location=denver,co
+POST /api/v1/users
+POST /api/v1/sessions
+POST /api/v1/road_trip
+```
 
-Things you may want to cover:
+It consumes Google Geocoding API, DarkSky API, and Flickr API to generate weather forecast data given a specified location, such as "Denver, CO". The response format is JSON API 1.0 Compliant.
 
-* Ruby version
+# Demo
+[Sweater-Weather API](https://weather-sweater.herokuapp.com/api/v1/forecast?location=denver,co)
 
-* System dependencies
+# Get started
+```
+$ git clone
+$ bundle install
+$ rake db:{create,migrate,seed}
+$ rspec
+```
 
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+# Versions
+- Rails 6.0.0
+- Ruby 2.6.3p62
