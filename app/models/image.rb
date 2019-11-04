@@ -3,6 +3,6 @@ class Image
 
   def initialize(data)
     @id = 0
-    @url = data[:results].first[:urls][:full]
+    @url = data[:results].shuffle.first[:urls][:full]
   end
 end
