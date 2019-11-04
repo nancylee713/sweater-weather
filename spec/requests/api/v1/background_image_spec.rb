@@ -13,6 +13,8 @@ describe 'Forecast API' do
 
     parsed = JSON.parse(response.body, symbolize_names: true)
 
-    
+    expect(parsed).to have_key(:data)
+    expect(parsed[:data][:type]).to eq('background_image')
+    expect(parsed[:data][:attributes]).to have_key(:url)
   end
 end
