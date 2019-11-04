@@ -3,7 +3,7 @@ require 'rails_helper'
 describe 'Forecast API' do
   before(:each) do
     VCR.turn_off!
-    WebMock.allow_net_connect!
+    stub_unsplash_request
   end
 
   it 'sends forecast data' do
