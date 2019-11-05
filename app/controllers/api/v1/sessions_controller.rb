@@ -3,7 +3,7 @@ class Api::V1::SessionsController < ApplicationController
     user = User.find_by(email: user_params[:email])
     if user && user.authenticate(user_params[:password])
       render json: {
-        "api_key": "jgn983hy48thw9begh98h4539h4",
+        "api_key": user.api_key,
         status: 200
       }, status: 200
 

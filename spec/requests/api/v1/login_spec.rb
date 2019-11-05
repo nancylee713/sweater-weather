@@ -12,7 +12,7 @@ describe 'Login' do
     parsed = JSON.parse(response.body, symbolize_names: true)
 
     expect(parsed).to have_key(:api_key)
-    expect(parsed[:api_key]).to eq('jgn983hy48thw9begh98h4539h4')
+    expect(parsed[:api_key]).to eq('test')
   end
 
   it 'returns 400 status code when given a nonexistent email' do
