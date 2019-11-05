@@ -76,5 +76,6 @@ RSpec.describe Forecast do
     expect(@forecast.uvIndex).to eq(1)
     expect(@forecast.today_sum).to eq('Mostly cloudy until afternoon')
     expect(@forecast.tonight_sum).to eq('Partly cloudy starting tonight, continuing until tomorrow morning')
+    expect(@forecast.time).to eq(1572817477)
   end
 end
