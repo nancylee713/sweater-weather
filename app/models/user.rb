@@ -6,4 +6,6 @@ class User < ApplicationRecord
     uniqueness: { case_sensitive: false }
 
   validates :password, confirmation: true
+
+  validates :api_key, presence: true, uniqueness: true
 end
