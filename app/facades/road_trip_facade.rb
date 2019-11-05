@@ -4,8 +4,8 @@ class RoadTripFacade
     @destination = info[:destination]
   end
 
-  def google_direction_data
-    google_direction_service.get_direction
+  def road_trip_data
+    RoadTrip.new(forecast_raw_data, time)
   end
 
   private
@@ -13,7 +13,6 @@ class RoadTripFacade
   attr_reader :origin, :destination
 
   def google_direction_service
-    GoogleDirectionService.new(@origin, @destination)
     GoogleDirectionService.new(origin, destination)
   end
 
@@ -28,5 +27,8 @@ class RoadTripFacade
   def time_machine_service
     TimeMachineService.new(google_direction_data, time)
   end
+
+  def forecast_raw_data
+    time_machine_service.get_data
   end
 end
