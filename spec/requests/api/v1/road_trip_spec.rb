@@ -21,6 +21,9 @@ describe 'Road Trip' do
   }
 
   before(:each) do
+    VCR.turn_off!
+    WebMock.allow_net_connect!
+
     user = User.create(user_attributes)
     post '/api/v1/users', params: user_attributes
     post '/api/v1/sessions', params: login_attributes
@@ -33,10 +36,15 @@ describe 'Road Trip' do
 
     parsed = JSON.parse(response.body, symbolize_names: true)
 
-    binding.pry
+    expect(parsed).to have_key(:data)
+    expect(parsed[:data][:type]).to eq('road_trip')
+    expect(parsed[:data][:attributes]).to have_key(:estimated_travel_time)
+    expect(parsed[:data][:attributes]).to have_key(:eta)
+    expect(parsed[:data][:attributes]).to have_key(:temperature)
+    expect(parsed[:data][:attributes]).to have_key(:summary)
   end
 
-  xit 'returns 401 status code when no API key or an incorrect key is given' do
+  it 'returns 401 status code when no API key or an incorrect key is given' do
     post '/api/v1/road_trip', params: invalid_trip_attributes
 
     expect(response.status).to eq(401)
