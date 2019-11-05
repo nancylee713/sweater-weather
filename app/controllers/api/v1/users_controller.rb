@@ -11,7 +11,7 @@ class Api::V1::UsersController < ApplicationController
     elsif user.email && user.password
       user.update(api_key: generate_api_key)
       render json: {
-        "api_key": generate_api_key,
+        "api_key": user.api_key,
         status: 201
       }, status: 201
 
