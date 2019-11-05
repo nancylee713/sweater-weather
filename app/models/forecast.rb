@@ -11,7 +11,8 @@ class Forecast
               :humidity,
               :visibility,
               :uvIndex,
-              :summaries
+              :summaries,
+              :time
 
   def initialize(location, weather_data)
     @id = 0
@@ -27,6 +28,7 @@ class Forecast
     @visibility = weather_data[:hourly][:data][0][:visibility]
     @uvIndex = weather_data[:hourly][:data][0][:uvIndex]
     @summaries = format_summary(weather_data)
+    @time = weather_data[:currently][:time]
   end
 
   def format_time(weather_data)
