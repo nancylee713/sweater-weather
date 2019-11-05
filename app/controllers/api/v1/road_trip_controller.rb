@@ -1,9 +1,9 @@
 class Api::V1::RoadTripController < ApplicationController
   def show
     if valid_key? trip_params[:api_key]
-      # Get data from Google Directions API
       facade = RoadTripFacade.new(trip_params)
-      facade.google_direction_data
+      render json: RoadTripSerializer.new(facade.road_trip_data)
+
     else
       render json: {
         error: "Invalid key. Please try again.",
