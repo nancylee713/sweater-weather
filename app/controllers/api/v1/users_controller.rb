@@ -26,8 +26,4 @@ class Api::V1::UsersController < ApplicationController
   def user_params
     params.permit(:email, :password, :password_confirmation)
   end
-
-  def user_exists?(user_params)
-    User.where(email: user_params[:email]).present?
-  end
 end
