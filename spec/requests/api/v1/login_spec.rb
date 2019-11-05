@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 describe 'Login' do
-  let(:user_attributes) { { email: 'whatever@example.com', password: 'password' } }
+  let(:user_attributes) { { email: 'whatever@example.com', password: 'password', api_key: 'test' } }
 
   it 'can login' do
     user = User.create(user_attributes)

@@ -1,14 +1,14 @@
 require 'rails_helper'
 
 describe 'Road Trip' do
-  let(:user_attributes) { { email: 'whatever@example.com', password: 'password', password_confirmation: 'password' } }
+  let(:user_attributes) { { email: 'whatever@example.com', password: 'password', password_confirmation: 'password', api_key: 'test' } }
   let(:login_attributes) { { email: 'whatever@example.com', password: 'password' } }
 
   let(:trip_attributes) {
     {
       "origin": "Denver,CO",
       "destination": "Pueblo,CO",
-      "api_key": "jgn983hy48thw9begh98h4539h4"
+      "api_key": "test"
     }
   }
 
@@ -25,6 +25,7 @@ describe 'Road Trip' do
     WebMock.allow_net_connect!
 
     user = User.create(user_attributes)
+
     post '/api/v1/users', params: user_attributes
     post '/api/v1/sessions', params: login_attributes
   end
