@@ -1,11 +1,11 @@
 class GoogleGeocodingService
-  def self.get_location(city:, state:)
-    new.get_location(city, state)
+  def self.get_location(place)
+    new.get_location(place)
   end
 
-  def get_location(city, state)
+  def get_location(place)
     response = conn.get 'geocode/json', {
-      address: "#{city},#{state}"
+      address: place
     }
 
     json = JSON.parse(response.body, symbolize_names: true)

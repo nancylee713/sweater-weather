@@ -7,7 +7,7 @@ RSpec.describe GoogleGeocodingService do
   end
 
   it "can get latitude and longitude of a given city" do
-    json_data = GoogleGeocodingService.get_location(city: "Denver", state: "CO")
+    json_data = GoogleGeocodingService.get_location("Denver,CO")
 
     expect(json_data).to be_a(Hash)
     expect(json_data).to have_key(:results)

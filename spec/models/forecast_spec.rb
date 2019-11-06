@@ -2,10 +2,10 @@ require 'rails_helper'
 
 RSpec.describe Forecast do
   before(:each) do
-    geocoding_data = JSON.parse(stub_geocoding_request.response.body, symbolize_names: true)
+    geocoding_data = JSON.parse(stub_denver_geocoding_request.response.body, symbolize_names: true)
     location = Location.new(geocoding_data)
 
-    weather_data = JSON.parse(stub_darksky_request.response.body, symbolize_names: true)
+    weather_data = JSON.parse(stub_denver_darksky_request.response.body, symbolize_names: true)
     @forecast = Forecast.new(location, weather_data)
   end
 
@@ -15,7 +15,7 @@ RSpec.describe Forecast do
 
   it "can return specific attributes" do
     expect(@forecast.id).to eq(0)
-    expect(@forecast.location).to eq('Denver, CO, United States')
+    expect(@forecast.location).to eq('Denver, Colorado, United States')
     expect(@forecast.current_time).to eq('03:55 PM, 11/02')
     expect(@forecast.current_sum).to eq('Partly Cloudy')
     expect(@forecast.icon).to eq('partly-cloudy-day')

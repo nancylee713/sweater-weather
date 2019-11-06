@@ -5,10 +5,10 @@ RSpec.describe Location do
     json_data = {
       "results": [
         "address_components": [
-          { "long_name": "Denver" },
-          { "long_name": "Denver County" },
-          { "short_name": "CO" },
-          { "long_name": "United States" }
+          { "long_name": "Denver", "types": [ "locality", "political"] },
+          { "long_name": "Denver County", "types": ["administrative_area_level_2", "political"] },
+          { "long_name": "Colorado", "short_name": "CO", "types": ["administrative_area_level_1", "political"] },
+          { "long_name": "United States", "types": ["country", "political"] }
         ],
         "geometry": {
           "location": {
@@ -39,7 +39,7 @@ RSpec.describe Location do
   it "can return address" do
     expected = {
       city: 'Denver',
-      state: 'CO',
+      state: 'Colorado',
       country: 'United States'
     }
 
@@ -47,7 +47,7 @@ RSpec.describe Location do
   end
 
   it "can return formatted address" do
-    expected = "Denver, CO, United States"
+    expected = "Denver, Colorado, United States"
 
     expect(@location.formatted_address).to eq(expected)
   end

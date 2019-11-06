@@ -1,9 +1,7 @@
 class ForecastFacade
 
-  def initialize(data)
-    arr = data.split(',')
-    @city = arr[0]
-    @state = arr[1]
+  def initialize(place)
+    @place = place
   end
 
   def forecast_data
@@ -11,10 +9,10 @@ class ForecastFacade
   end
 
   private
-  attr_reader :city, :state
+  attr_reader :place
 
   def geocoding_data
-    GoogleGeocodingService.get_location(city: city, state: state)
+    GoogleGeocodingService.get_location(place)
   end
 
   def location

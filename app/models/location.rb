@@ -4,20 +4,31 @@ class Location
   def initialize(data)
     @latitude = data[:results][0][:geometry][:location][:lat]
     @longitude = data[:results][0][:geometry][:location][:lng]
-    @address = parse_address(data)
+    @address = check_address(data)
   end
 
   def formatted_address
-    address.values.join(', ')
+    address.values.reject(&:empty?).join(', ')
   end
 
   private
 
+  def check_address(data)
+    alt_address = { country: data[:results].first[:formatted_address] }
+    parse_address(data).values.join.empty? ? alt_address : parse_address(data)
+  end
+
   def parse_address(data)
     {
-      city: data[:results][0][:address_components][0][:long_name],
-      state: data[:results][0][:address_components][2][:short_name],
-      country: data[:results][0][:address_components][3][:long_name]
+      city: name_of(data, 'locality'),
+      state: name_of(data, 'administrative_area_level_1'),
+      country: name_of(data, 'country')
     }
+  end
+
+  def name_of(data, type)
+    temp = data[:results][0][:address_components]
+            .select { |x| x[:types].include? type }
+    temp.present? ? temp.first[:long_name] : ''
   end
 end

@@ -3,8 +3,7 @@ require 'rails_helper'
 RSpec.describe DarkSkyService do
   before(:each) do
     VCR.turn_off!
-    stub_geocoding_request
-    json_data = JSON.parse(stub_geocoding_request.response.body, symbolize_names: true)
+    json_data = JSON.parse(stub_denver_geocoding_request.response.body, symbolize_names: true)
 
     @location = Location.new(json_data)
   end
