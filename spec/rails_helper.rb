@@ -24,25 +24,46 @@ VCR.configure do |config|
   config.configure_rspec_metadata!
 end
 
-def stub_geocoding_request
-  location_data = File.open('./spec/fixtures/google_geocoding_data.json')
+def stub_denver_geocoding_request
+  location_data = File.open('./spec/fixtures/denver_geocoding_data.json')
   stub_request(:get, "https://maps.googleapis.com/maps/api/geocode/json?address=denver,co&key=#{ENV['google_geocoding_api']}")
     .to_return(status: 200, body: location_data)
 end
 
-def stub_darksky_request
+def stub_denver_darksky_request
   key = ENV['dark_sky_api']
   lat = 39.7392358
   lng = -104.990251
 
-  weather_data = File.open('./spec/fixtures/weather_data.json')
+  weather_data = File.open('./spec/fixtures/denver_weather_data.json')
   stub_request(:get, "https://api.darksky.net/forecast/#{key}/#{lat},#{lng}")
     .to_return(status: 200, body: weather_data)
 end
 
-def stub_forecast_request
-  stub_geocoding_request
-  stub_darksky_request
+def stub_denver_forecast_request
+  stub_denver_geocoding_request
+  stub_denver_darksky_request
+end
+
+def stub_seoul_geocoding_request
+  location_data = File.open('./spec/fixtures/seoul_geocoding_data.json')
+  stub_request(:get, "https://maps.googleapis.com/maps/api/geocode/json?address=seoul&key=#{ENV['google_geocoding_api']}")
+    .to_return(status: 200, body: location_data)
+end
+
+def stub_seoul_darksky_request
+  key = ENV['dark_sky_api']
+  lat = 37.566535
+  lng = 126.9779692
+
+  weather_data = File.open('./spec/fixtures/seoul_weather_data.json')
+  stub_request(:get, "https://api.darksky.net/forecast/#{key}/#{lat},#{lng}")
+    .to_return(status: 200, body: weather_data)
+end
+
+def stub_seoul_forecast_request
+  stub_seoul_geocoding_request
+  stub_seoul_darksky_request
 end
 
 def stub_unsplash_request

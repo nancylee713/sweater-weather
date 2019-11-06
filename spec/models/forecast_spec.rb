@@ -3,9 +3,11 @@ require 'rails_helper'
 RSpec.describe Forecast do
   before(:each) do
     geocoding_data = JSON.parse(stub_geocoding_request.response.body, symbolize_names: true)
+    geocoding_data = JSON.parse(stub_denver_geocoding_request.response.body, symbolize_names: true)
     location = Location.new(geocoding_data)
 
     weather_data = JSON.parse(stub_darksky_request.response.body, symbolize_names: true)
+    weather_data = JSON.parse(stub_denver_darksky_request.response.body, symbolize_names: true)
     @forecast = Forecast.new(location, weather_data)
   end
 
