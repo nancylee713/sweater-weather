@@ -3,10 +3,8 @@ require 'rails_helper'
 describe 'Forecast API' do
   before(:each) do
     VCR.turn_off!
-    stub_forecast_request
   end
 
-  it 'sends forecast data' do
   it 'sends forecast data in US' do
     stub_denver_forecast_request
 
@@ -18,7 +16,7 @@ describe 'Forecast API' do
 
     expect(parsed[:data][:attributes].count).to eq(5)
     expect(parsed[:data][:attributes][:overview]).to have_key(:location)
-    expect(parsed[:data][:attributes][:overview][:location]).to eq("Denver, CO, United States")
+    expect(parsed[:data][:attributes][:overview][:location]).to eq("Denver, Colorado, United States")
     expect(parsed[:data][:attributes][:overview]).to have_key(:current_time)
     expect(parsed[:data][:attributes][:overview]).to have_key(:current_summary)
     expect(parsed[:data][:attributes][:overview]).to have_key(:icon)
