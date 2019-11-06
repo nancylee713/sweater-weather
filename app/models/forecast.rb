@@ -12,7 +12,9 @@ class Forecast
               :visibility,
               :uvIndex,
               :summaries,
-              :time
+              :time,
+              :hourly_forecast,
+              :daily_forecast
 
   def initialize(location, weather_data)
     @id = 0
@@ -29,6 +31,8 @@ class Forecast
     @uvIndex = weather_data[:hourly][:data][0][:uvIndex]
     @summaries = format_summary(weather_data)
     @time = weather_data[:currently][:time]
+    @hourly_forecast = hourly_group(weather_data)
+    @daily_forecast = daily_group(weather_data)
   end
 
   def format_time(weather_data)
@@ -51,5 +55,35 @@ class Forecast
 
   def tonight_sum
     summaries[:tonight_sum]
+  end
+
+  private
+
+  def hourly_group(weather_data)
+    hours = weather_data[:hourly][:data].first(8)
+    hours.each {|hash| hash[:time] = format_time_hourly(hash[:time])}
+  end
+
+  def format_time_hourly(time)
+    datetime = Time.at(time)
+    datetime.strftime('%l %p').strip
+  end
+
+  def daily_group(weather_data)
+    days = weather_data[:daily][:data].first(5)
+    days.each do |hash|
+      hash[:time] = format_time_daily(hash[:time])
+      hash[:precipProbability] = format_precip_prob(hash[:precipProbability])
+    end
+  end
+
+  def format_precip_prob(num)
+    percent = (num * 100).round(0)
+    "#{percent}%"
+  end
+
+  def format_time_daily(time)
+    datetime = Time.at(time)
+    datetime.strftime('%A')
   end
 end
