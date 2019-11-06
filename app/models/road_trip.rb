@@ -4,14 +4,14 @@ class RoadTrip
   def initialize(data, duration)
     @id = 0
     @estimated_travel_time = duration[:text]
-    @eta = format_adjusted_time(data, duration)
+    @eta = format_adjusted_time(duration)
     @temperature = data[:hourly][:data].first[:temperature]   # not sure which data point to select from the 'hourly' hash, by timestamp?
     @summary = data[:hourly][:summary]
   end
 
   private
 
-  def format_adjusted_time(data, duration)
+  def format_adjusted_time(duration)
     now = Time.now.to_i
     diff = duration[:value]
     unix_time = now + duration[:value]
