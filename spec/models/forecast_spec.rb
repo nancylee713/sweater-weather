@@ -15,8 +15,8 @@ RSpec.describe Forecast do
 
   it "can return specific attributes" do
     expect(@forecast.id).to eq(0)
-    expect(@forecast.location).to eq('Denver, Colorado, United States')
-    expect(@forecast.current_time).to eq('03:55 PM, 11/02')
+    expect(@forecast.location).to be_a(Location)
+    expect(@forecast.current_time).to eq(1572731759)
     expect(@forecast.current_sum).to eq('Partly Cloudy')
     expect(@forecast.icon).to eq('partly-cloudy-day')
     expect(@forecast.current_temp).to eq(45.55)
@@ -26,10 +26,9 @@ RSpec.describe Forecast do
     expect(@forecast.humidity).to eq(0.41)
     expect(@forecast.visibility).to eq(10)
     expect(@forecast.uvIndex).to eq(2)
-    expect(@forecast.today_sum).to eq('Partly Cloudy')
-    expect(@forecast.tonight_sum).to eq('Partly Cloudy')
-    expect(@forecast.time).to eq(1572731759)
-    expect(@forecast.hourly_forecast.count).to eq(8)
-    expect(@forecast.daily_forecast.count).to eq(5)
+    expect(@forecast.today_summary).to eq('Partly Cloudy')
+    expect(@forecast.hourly_time).to eq(1572728400)
+    expect(@forecast.hourly_group.count).to eq(8)
+    expect(@forecast.daily_group.count).to eq(5)
   end
 end

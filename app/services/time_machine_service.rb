@@ -1,7 +1,7 @@
 class TimeMachineService
   def initialize(google_direction_data, time)
     @google_direction_data = google_direction_data
-    @time = time[:value]
+    @time = time[:value] + Time.now.to_i
   end
 
   def get_data

@@ -4,7 +4,7 @@ class ForecastSerializer
 
   attribute :overview do |data|
     {
-      location: data.location,
+      location: data.address,
       current_time: data.current_time,
       current_summary: data.current_sum,
       icon: data.icon,
@@ -25,10 +25,10 @@ class ForecastSerializer
   end
 
   attribute :hourly_forecast do |data|
-    data.hourly_forecast.map! {|hour| hour.slice(:time, :temperature)}
+    data.hourly_group.map! {|hour| hour.slice(:time, :temperature)}
   end
 
   attribute :daily_forecast do |data|
-    data.daily_forecast.map! {|day| day.slice(:time, :summary, :precipProbability, :precipType, :temperatureHigh, :temperatureLow)}
+    data.daily_group.map! {|day| day.slice(:time, :summary, :precipProbability, :precipType, :temperatureHigh, :temperatureLow)}
   end
 end

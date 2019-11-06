@@ -4,8 +4,8 @@ class ForecastFacade
     @place = place
   end
 
-  def forecast_data
-    Forecast.new(location, weather_data)
+  def data
+    ForecastDecorator.new(forecast_data)
   end
 
   private
@@ -21,5 +21,9 @@ class ForecastFacade
 
   def weather_data
     DarkSkyService.get_data(location)
+  end
+
+  def forecast_data
+    Forecast.new(location, weather_data)
   end
 end
